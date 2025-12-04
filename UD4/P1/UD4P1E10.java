@@ -1,6 +1,6 @@
 package P1;
 
-public class P1E10 {
+public class UD4P1E10 {
     
     public static void main(String[] args) {
         

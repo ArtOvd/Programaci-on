@@ -2,7 +2,7 @@ package P1;
 
 import java.util.Scanner;
 
-public class P1E12 {
+public class UD4P1E12 {
 
     public static void main(String[] args) {
         int[] nums = {10, 20, 30, 40, 50};

@@ -2,7 +2,7 @@ package P1;
 
 import java.util.Scanner;
 
-public class P1E5 {
+public class UD4P1E5 {
 
     public static void main(String[] args) {
 
