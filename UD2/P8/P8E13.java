@@ -1,0 +1,35 @@
+
+import java.util.Scanner;
+
+public class P8E13 {
+    
+    public static void main(String[] args) {
+        
+        Scanner leer = new Scanner(System.in);
+        System.out.print("Introduce un número A: ");
+        int a = leer.nextInt();
+
+        System.out.print("Introduce un número B: ");
+        int b = leer.nextInt();
+
+        if (a >= 0 && b >= 0) {
+            if (a < b) {
+                for (int i = a; i <= b; i++) {
+                    if (i % 2 == 0) {
+                        System.out.println(i); 
+                    }    
+                }
+            } else if (b < a) {
+                for (int i = b; i <= a; i++) {
+                    if (i % 2 == 0) {
+                    System.out.println(i);
+                    }  
+                }
+            }
+            
+
+        }
+
+    }
+
+}
