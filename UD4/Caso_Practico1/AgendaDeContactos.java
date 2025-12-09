@@ -3,7 +3,6 @@ package Caso_Practico1;
 import java.util.Scanner;
 
 public class AgendaDeContactos {
-    // VARIABLES GLOBALES
     static Scanner sc = new Scanner(System.in);
     static int MAX_SIZE = 100;
     static int count = 0;
@@ -13,7 +12,6 @@ public class AgendaDeContactos {
     static int opcion;
 
     public static void main(String[] args) {
-        // BUCLE PRINCIPAL DEL MENÚ
         do {
             mostrarMenu();
             opcion = eligirOpcion();
@@ -50,11 +48,6 @@ public class AgendaDeContactos {
         } while (opcion != 0);
     }
 
-    // ==================================
-    // METODOS RELACIONADOS CON UI
-    // ==================================
-
-    // MOSTRAR EL MENÚ PRINCIPAL
     static void mostrarMenu() {
         System.out.println("1. Listar contactos");
         System.out.println("2. Buscar por nombre");
@@ -64,7 +57,6 @@ public class AgendaDeContactos {
         System.out.println("0. Salir");
     }
 
-    // GUARDAR OPCIÓN DEL MENÚ
     static int eligirOpcion() {
         System.out.print("Elige una opcion: ");
         int opcion = sc.nextInt();
@@ -72,16 +64,6 @@ public class AgendaDeContactos {
         return opcion;
     }
 
-    // ======================================
-    // METODOS RELACIONADOS CON LA LÓGICA
-    // ======================================
-
-    // =====================
-    // OPCIONES DEL MENÚ
-    // =====================
-
-    // OPCIÓN 1
-    // LISTAR TODOS LOS CONTACTOS DISPONIBLES
     static void listarContactos() {
         System.out.println("===================");
         System.out.println("Lista de contactos");
@@ -92,8 +74,6 @@ public class AgendaDeContactos {
         }
     }
 
-    // OPCIÓN 2
-    // BUSCAR CONTACTO POR EL NOMBRE INTRODUCIDO
     static int buscarContacto() {
         System.out.println("=======================");
         System.out.println("Busqueda de contactos");
@@ -111,7 +91,6 @@ public class AgendaDeContactos {
         } while (true);
     }
 
-    // MOSTRAR CORREO PEDIDO POR BUSQUEDA
     static void listSingleContact(int index) {
         if (index != -1) {
             System.out.println("Contacto encontrado: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
@@ -119,37 +98,43 @@ public class AgendaDeContactos {
         }
     }
 
-    //OPCIÓN 3
-    // GUARDAR CONTACTO COMPLETO
     static void addContact() {
         boolean validacion = false;
         System.out.println("========================");
         System.out.println("Añadir contacto nuevo");
         System.out.println("========================");
         do {
-            String nombre = pedirNombre().toLowerCase().trim();
-            int telefono = pedirTelefono();
-            String email = pedirCorreo().toLowerCase().trim();
-            if (validarNombre(nombre) && validarTelefono(telefono) && validarCorreo(email)) {
-                nombres[count] = nombre;
-                telefonos[count] = telefono;
-                emails[count] = email;
+            String newName = pedirNombre().toLowerCase().trim();
+            int newPhone = pedirTelefono();
+            String newEmail = pedirCorreo().toLowerCase().trim();
+            boolean nombreValido = validarNombre(newName);
+            boolean telefonoValido = validarTelefono(newPhone);
+            boolean correoValido = validarCorreo(newEmail);
+            if (nombreValido && telefonoValido && correoValido) {
+                nombres[count] = newName;
+                telefonos[count] = newPhone;
+                emails[count] = newEmail;
                 System.out.println("\n Datos se han guardado correctamente! \n");
                 validacion = true;
                 count++;
             } else {
-                System.out.println("Datos introducidos son incorrectos. Intentalo de nuevo");
+                System.out.println("Datos introducidos son incorrectos. Si quieres salir - escribe \"sí\". ");
+                String opcionSalir = sc.nextLine();
+                if (opcionSalir.equalsIgnoreCase("sí") || opcionSalir.equalsIgnoreCase("si")) {
+                    break;
+                }
             }
         } while (!validacion);
     }
 
-    // OPICÓN 4
-    // MODIFICAR CONTACTO EXISTENTE
     static void modificarContacto() {
         System.out.println("==========================");
         System.out.println("Modificación del contacto");
         System.out.println("==========================");
         int index = buscarContacto();
+        String newName = "";
+        int newPhone = 0;
+        String newEmail = "";
         boolean validacion = false;
         if (index != -1) {
             System.out.println("Contacto encontrado: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
@@ -157,17 +142,63 @@ public class AgendaDeContactos {
             String respuesta = sc.nextLine();
             if (respuesta.equalsIgnoreCase("si") || respuesta.equalsIgnoreCase("sí")) {
                 do {
-                    String newName = pedirNombre().toLowerCase().trim();
-                    int newPhone = pedirTelefono();
-                    String newEmail = pedirCorreo().toLowerCase().trim();
-                    if (validarNombre(newName) && validarTelefono(newPhone) && validarCorreo(newEmail)) {
-                        nombres[index] = newName;
-                        telefonos[index] = newPhone;
-                        emails[index] = newEmail;
-                        validacion = true;
-                    } else {
+                    System.out.println("Que apartado quieres cambiar?");
+                    System.out.println("1 - Nombre");
+                    System.out.println("2 - Telefono");
+                    System.out.println("3 - Email");
+                    System.out.println("4 - Contacto entero");
+                    System.out.print("Tu opción: ");
+                    int entrada = sc.nextInt();
+                    sc.nextLine();
+                    boolean nombreValido = true;
+                    boolean telefonoValido = true;
+                    boolean correoValido = true;
+                    switch (entrada) {
+                        case 1:
+                            newName = pedirNombre().toLowerCase().trim();
+                            nombreValido = validarNombre(newName);
+                            if (nombreValido) {
+                                nombres[index] = newName;
+                                validacion = true;
+                            }
+                            break;
+                        case 2:
+                            newPhone = pedirTelefono();
+                            telefonoValido = validarTelefono(newPhone);
+                            if (telefonoValido) {
+                                telefonos[index] = newPhone;
+                                validacion = true;
+                            }
+                            break;
+                        case 3:
+                            newEmail = pedirCorreo().toLowerCase().trim();
+                            correoValido = validarCorreo(newEmail);
+                            if (correoValido) {
+                                emails[index] = newEmail;
+                                validacion = true;
+                            }
+                            break;
+                        case 4:
+                            newName = pedirNombre().toLowerCase().trim();
+                            newPhone = pedirTelefono();
+                            newEmail = pedirCorreo().toLowerCase().trim();
+                            nombreValido = validarNombre(newName);
+                            telefonoValido = validarTelefono(newPhone);
+                            correoValido = validarCorreo(newEmail);
+                            if (nombreValido && telefonoValido && correoValido) {
+                                nombres[index] = newName;
+                                telefonos[index] = newPhone;
+                                emails[index] = newEmail;
+                                validacion = true;
+                            }
+                            break;
+                        default:
+                            System.out.println("Entrada no valida. Elige otra opción.");
+                            continue;
+                    }
+                    if (!validacion) {
                         System.out.println("Datos introducidos son incorrectos. Si quieres salir - escribe \"sí\". ");
-                        String opcion = sc.next();
+                        String opcion = sc.nextLine();
                         if (opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("si")) {
                             break;
                         }
@@ -176,11 +207,11 @@ public class AgendaDeContactos {
                 System.out.print("Nuevo contacto: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
                 System.out.println();
             }
+        } else {
+            System.out.println("Error. Intenta de nuevo.");
         }
     }
 
-    // OPCIÓN 5
-    // ELIMINAR CONTACTO EXISTENTE
     static void eliminarContacto() {
         System.out.println("==========================");
         System.out.println("Eliminación de contactos");
@@ -205,20 +236,12 @@ public class AgendaDeContactos {
         }
     }
 
-    // ===========================================
-    // METODOS ADICIONALES PARA OPCIONES DEL MENÚ
-    // ===========================================
-
-    // 3 METODOS PARA PETICIÓN DE DATOS
-
-    // PEDIR NOMBRE
     static String pedirNombre() {
         System.out.print("Introduce el nombre de la cuenta: ");
         String nombre = sc.nextLine();
         return nombre;
     }
 
-    // PEDIR TELEFONO
     static int pedirTelefono() {
         System.out.print("Introduce el telefono de la cuenta: ");
         int telefono = Integer.parseInt(sc.next());
@@ -226,59 +249,63 @@ public class AgendaDeContactos {
         return telefono;
     }
 
-    // PEDIR CORREO
     static String pedirCorreo() {
         System.out.print("Introduce el email de la cuenta: ");
         String email = sc.nextLine();
         return email;
     }
 
-    // 3 METODOS DE VALIDACIÓN DE DATOS INTRODUCIDOS
-
-    // VALIDAR NOMBRE
     static boolean validarNombre(String nombre) {
+        if (nombre.isEmpty()) {
+            System.out.println("No se puede guardar un nombre vacío.");
+            return false;
+        }
+        if (nombre.length() < 3) {
+            System.out.println("El nombre debe tener como mínimo 3 digitos.");
+            return false;
+        }
         for (int i = 0; i < count; i++) {
             if (nombres[i].equals(nombre)) {
-                return false;
-            }
-            if (nombre.isEmpty()) {
+                System.out.println("El nombre ya existe.");
                 return false;
             }
         }
         return true;
     }
 
-    // VALIDAR TELEFONO
     static boolean validarTelefono(int telefono) {
         String tel = String.valueOf(telefono);
         for (int i = 0; i < count; i++) {
             if (telefono == telefonos[i]) {
+                System.out.println("Este telefono ya existe.");
                 return false;
             }
         }
         if (tel.length() != 9) {
+            System.out.println("El telefono debe tener 9 digitos.");
             return false;
         }
         return true;
     }
 
-    // VALIDAR CORREO
     static boolean validarCorreo(String correo) {
-        for (int i = 0; i < count; i++) {
-            if (emails[i].equals(correo)) {
-                return false;
-            }
-        }
         if (correo.isEmpty()) {
+            System.out.println("No se puede guardar el correo vacío.");
             return false;
         }
         if (!correo.contains("@") || !correo.contains(".")) {
+            System.out.println("El correo debe contener \"@\" y \".\"");
             return false;
+        }
+        for (int i = 0; i < count; i++) {
+            if (emails[i].equals(correo)) {
+                System.out.println("Este correo ya existe.");
+                return false;
+            }
         }
         return true;
     }
 
-    // COMPROBACIÓN DEL CONTADOR PARA EL MENÚ
     static boolean comprobarContador(int count) {
         if (count < 1) {
             System.out.println("Todavía no hay contactos disponibles. Elige otra opción.");
