@@ -48,6 +48,11 @@ public class AgendaDeContactos {
         } while (opcion != 0);
     }
 
+    // ==================================
+    // METODOS RELACIONADOS CON UI
+    // ==================================
+
+    // MOSTRAR EL MENÚ PRINCIPAL
     static void mostrarMenu() {
         System.out.println("1. Listar contactos");
         System.out.println("2. Buscar por nombre");
@@ -57,6 +62,7 @@ public class AgendaDeContactos {
         System.out.println("0. Salir");
     }
 
+    // GUARDAR OPCIÓN DEL MENÚ
     static int eligirOpcion() {
         System.out.print("Elige una opcion: ");
         int opcion = sc.nextInt();
@@ -64,16 +70,28 @@ public class AgendaDeContactos {
         return opcion;
     }
 
+    // ======================================
+    // METODOS RELACIONADOS CON LA LÓGICA
+    // ======================================
+
+    // =====================
+    // OPCIONES DEL MENÚ
+    // =====================
+
+    // OPCIÓN 1
+    // LISTAR TODOS LOS CONTACTOS DISPONIBLES
     static void listarContactos() {
         System.out.println("===================");
         System.out.println("Lista de contactos");
         System.out.println("===================");
         for (int i = 0; i < count; i++) {
             System.out.println(nombres[i] + " # " + telefonos[i] + " : " + emails[i]);
-            System.out.println("===================");
         }
+        System.out.println("===================");
     }
 
+    // OPCIÓN 2
+    // BUSCAR CONTACTO POR EL NOMBRE INTRODUCIDO
     static int buscarContacto() {
         System.out.println("=======================");
         System.out.println("Busqueda de contactos");
@@ -91,6 +109,7 @@ public class AgendaDeContactos {
         } while (true);
     }
 
+    // MOSTRAR CORREO PEDIDO POR BUSQUEDA
     static void listSingleContact(int index) {
         if (index != -1) {
             System.out.println("Contacto encontrado: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
@@ -98,6 +117,8 @@ public class AgendaDeContactos {
         }
     }
 
+    // OPCIÓN 3
+    // GUARDAR CONTACTO COMPLETO
     static void addContact() {
         boolean validacion = false;
         System.out.println("========================");
@@ -118,7 +139,16 @@ public class AgendaDeContactos {
                 validacion = true;
                 count++;
             } else {
-                System.out.println("Datos introducidos son incorrectos. Si quieres salir - escribe \"sí\". ");
+                if (!nombreValido) {
+                    System.out.println("Error en el nombre. Debe ser único, no vacío y tener al menos 3 caracteres.");
+                }
+                if (!telefonoValido) {
+                    System.out.println("Error en el teléfono. Debe ser único y tener 9 dígitos.");
+                }
+                if (!correoValido) {
+                    System.out.println("Error en el correo. Debe ser único, no vacío y contener '@' y '.'");
+                }
+                System.out.println("Si quieres salir, escribe \"sí\". De lo contrario, intenta de nuevo.");
                 String opcionSalir = sc.nextLine();
                 if (opcionSalir.equalsIgnoreCase("sí") || opcionSalir.equalsIgnoreCase("si")) {
                     break;
@@ -127,6 +157,8 @@ public class AgendaDeContactos {
         } while (!validacion);
     }
 
+    // OPCIÓN 4
+    // MODIFICAR CONTACTO EXISTENTE
     static void modificarContacto() {
         System.out.println("==========================");
         System.out.println("Modificación del contacto");
@@ -212,6 +244,8 @@ public class AgendaDeContactos {
         }
     }
 
+    // OPCIÓN 5
+    // ELIMINAR CONTACTO EXISTENTE
     static void eliminarContacto() {
         System.out.println("==========================");
         System.out.println("Eliminación de contactos");
@@ -236,12 +270,18 @@ public class AgendaDeContactos {
         }
     }
 
+    // ===========================================
+    // METODOS ADICIONALES PARA OPCIONES DEL MENÚ
+    // ===========================================
+
+    // PEDIR NOMBRE
     static String pedirNombre() {
         System.out.print("Introduce el nombre de la cuenta: ");
         String nombre = sc.nextLine();
         return nombre;
     }
 
+    // PEDIR TELEFONO
     static int pedirTelefono() {
         System.out.print("Introduce el telefono de la cuenta: ");
         int telefono = Integer.parseInt(sc.next());
@@ -249,12 +289,14 @@ public class AgendaDeContactos {
         return telefono;
     }
 
+    // PEDIR CORREO
     static String pedirCorreo() {
         System.out.print("Introduce el email de la cuenta: ");
         String email = sc.nextLine();
         return email;
     }
 
+    // VALIDAR NOMBRE
     static boolean validarNombre(String nombre) {
         if (nombre.isEmpty()) {
             System.out.println("No se puede guardar un nombre vacío.");
@@ -273,6 +315,7 @@ public class AgendaDeContactos {
         return true;
     }
 
+    // VALIDAR TELEFONO
     static boolean validarTelefono(int telefono) {
         String tel = String.valueOf(telefono);
         for (int i = 0; i < count; i++) {
@@ -288,6 +331,7 @@ public class AgendaDeContactos {
         return true;
     }
 
+    // VALIDAR CORREO
     static boolean validarCorreo(String correo) {
         if (correo.isEmpty()) {
             System.out.println("No se puede guardar el correo vacío.");
@@ -306,6 +350,7 @@ public class AgendaDeContactos {
         return true;
     }
 
+    // COMPROBACIÓN DEL CONTADOR PARA EL MENÚ
     static boolean comprobarContador(int count) {
         if (count < 1) {
             System.out.println("Todavía no hay contactos disponibles. Elige otra opción.");
