@@ -1,5 +1,4 @@
 package Caso_Practico1;
-
 import java.util.Scanner;
 
 public class AgendaDeContactos {
@@ -11,7 +10,21 @@ public class AgendaDeContactos {
     static String[] emails = new String[MAX_SIZE];
     static int opcion;
 
+    public static void meterContactosPruebas(){
+        nombres[0] = "Lionel";
+        telefonos[0] = 123456789;
+        emails[0] = "lio@gva.es";
+        nombres[1] = "Artem";
+        telefonos[1] = 123789456;
+        emails[1] = "artem@gva.es";
+        nombres[2] = "Vlady";
+        telefonos[2] = 789456123;
+        emails[2] = "vlady@gva.es";
+        count += 3;
+    }
+
     public static void main(String[] args) {
+        meterContactosPruebas();
         do {
             mostrarMenu();
             opcion = eligirOpcion();
@@ -49,7 +62,7 @@ public class AgendaDeContactos {
     }
 
     // ==================================
-    // METODOS RELACIONADOS CON UI
+    // MÉTODOS RELACIONADOS CON UI
     // ==================================
 
     // MOSTRAR EL MENÚ PRINCIPAL
@@ -64,14 +77,14 @@ public class AgendaDeContactos {
 
     // GUARDAR OPCIÓN DEL MENÚ
     static int eligirOpcion() {
-        System.out.print("Elige una opcion: ");
+        System.out.print("Elige una opción: ");
         int opcion = sc.nextInt();
         sc.nextLine();
         return opcion;
     }
 
     // ======================================
-    // METODOS RELACIONADOS CON LA LÓGICA
+    // MÉTODOS RELACIONADOS CON LA LÓGICA
     // ======================================
 
     // =====================
@@ -85,7 +98,8 @@ public class AgendaDeContactos {
         System.out.println("Lista de contactos");
         System.out.println("===================");
         for (int i = 0; i < count; i++) {
-            System.out.println(nombres[i] + " # " + telefonos[i] + " : " + emails[i]);
+            //System.out.println(nombres[i] + " # " + telefonos[i] + " : " + emails[i]);
+            listSingleContact(i);
         }
         System.out.println("===================");
     }
@@ -109,11 +123,11 @@ public class AgendaDeContactos {
         } while (true);
     }
 
-    // MOSTRAR CORREO PEDIDO POR BUSQUEDA
+    // MOSTRAR CORREO PEDIDO POR BÚSQUEDA
     static void listSingleContact(int index) {
-        if (index != -1) {
-            System.out.println("Contacto encontrado: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
-            System.out.println("=======================");
+        if (index >= 0 && index < count) {
+            System.out.println(nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
+            //System.out.println("=======================");
         }
     }
 
@@ -124,37 +138,34 @@ public class AgendaDeContactos {
         System.out.println("========================");
         System.out.println("Añadir contacto nuevo");
         System.out.println("========================");
-        do {
-            String newName = pedirNombre().toLowerCase().trim();
-            int newPhone = pedirTelefono();
-            String newEmail = pedirCorreo().toLowerCase().trim();
-            boolean nombreValido = validarNombre(newName);
-            boolean telefonoValido = validarTelefono(newPhone);
-            boolean correoValido = validarCorreo(newEmail);
-            if (nombreValido && telefonoValido && correoValido) {
-                nombres[count] = newName;
-                telefonos[count] = newPhone;
-                emails[count] = newEmail;
-                System.out.println("\n Datos se han guardado correctamente! \n");
-                validacion = true;
-                count++;
-            } else {
-                if (!nombreValido) {
-                    System.out.println("Error en el nombre. Debe ser único, no vacío y tener al menos 3 caracteres.");
+        if (count <= MAX_SIZE) {
+            do {
+                String newName = pedirNombre().toLowerCase().trim();
+                int newPhone = pedirTelefono();
+                String newEmail = pedirCorreo().toLowerCase().trim();
+                boolean nombreValido = validarNombre(newName);
+                boolean telefonoValido = validarTelefono(newPhone);
+                boolean correoValido = validarCorreo(newEmail);
+                if (nombreValido && telefonoValido && correoValido) {
+                    nombres[count] = newName;
+                    telefonos[count] = newPhone;
+                    emails[count] = newEmail;
+                    System.out.println("==================================");
+                    System.out.println("Contacto guardado correctamente!");
+                    System.out.println("==================================");
+                    validacion = true;
+                    count++;
+                } else {
+                    System.out.println("Si quieres salir, escribe \"sí\".");
+                    String opcionSalir = sc.nextLine();
+                    if (opcionSalir.equalsIgnoreCase("sí") || opcionSalir.equalsIgnoreCase("si")) {
+                        break;
+                    }
                 }
-                if (!telefonoValido) {
-                    System.out.println("Error en el teléfono. Debe ser único y tener 9 dígitos.");
-                }
-                if (!correoValido) {
-                    System.out.println("Error en el correo. Debe ser único, no vacío y contener '@' y '.'");
-                }
-                System.out.println("Si quieres salir, escribe \"sí\". De lo contrario, intenta de nuevo.");
-                String opcionSalir = sc.nextLine();
-                if (opcionSalir.equalsIgnoreCase("sí") || opcionSalir.equalsIgnoreCase("si")) {
-                    break;
-                }
-            }
-        } while (!validacion);
+            } while (!validacion);
+        } else {
+            System.out.println("No se puede añadir más contactos.");
+        }
     }
 
     // OPCIÓN 4
@@ -176,7 +187,7 @@ public class AgendaDeContactos {
                 do {
                     System.out.println("Que apartado quieres cambiar?");
                     System.out.println("1 - Nombre");
-                    System.out.println("2 - Telefono");
+                    System.out.println("2 - Teléfono");
                     System.out.println("3 - Email");
                     System.out.println("4 - Contacto entero");
                     System.out.print("Tu opción: ");
@@ -229,13 +240,14 @@ public class AgendaDeContactos {
                             continue;
                     }
                     if (!validacion) {
-                        System.out.println("Datos introducidos son incorrectos. Si quieres salir - escribe \"sí\". ");
+                        System.out.println("Si quieres salir - escribe \"sí\". ");
                         String opcion = sc.nextLine();
                         if (opcion.equalsIgnoreCase("sí") || opcion.equalsIgnoreCase("si")) {
                             break;
                         }
                     }
                 } while (!validacion);
+                System.out.println("Contacto modificado correctamente!");
                 System.out.print("Nuevo contacto: " + nombres[index] + " # " + telefonos[index] + " : " + emails[index]);
                 System.out.println();
             }
@@ -271,7 +283,7 @@ public class AgendaDeContactos {
     }
 
     // ===========================================
-    // METODOS ADICIONALES PARA OPCIONES DEL MENÚ
+    // MÉTODOS ADICIONALES PARA OPCIONES DEL MENÚ
     // ===========================================
 
     // PEDIR NOMBRE
@@ -281,10 +293,10 @@ public class AgendaDeContactos {
         return nombre;
     }
 
-    // PEDIR TELEFONO
+    // PEDIR TELÉFONO
     static int pedirTelefono() {
-        System.out.print("Introduce el telefono de la cuenta: ");
-        int telefono = Integer.parseInt(sc.next());
+        System.out.print("Introduce el teléfono de la cuenta: ");
+        int telefono = sc.nextInt();
         sc.nextLine();
         return telefono;
     }
@@ -315,17 +327,17 @@ public class AgendaDeContactos {
         return true;
     }
 
-    // VALIDAR TELEFONO
+    // VALIDAR TELÉFONO
     static boolean validarTelefono(int telefono) {
         String tel = String.valueOf(telefono);
         for (int i = 0; i < count; i++) {
             if (telefono == telefonos[i]) {
-                System.out.println("Este telefono ya existe.");
+                System.out.println("Este teléfono ya existe.");
                 return false;
             }
         }
         if (tel.length() != 9) {
-            System.out.println("El telefono debe tener 9 digitos.");
+            System.out.println("El 1teléfono debe tener 9 digitos.");
             return false;
         }
         return true;
