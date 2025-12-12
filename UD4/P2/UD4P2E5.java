@@ -3,7 +3,6 @@ package P2;
 import java.util.Scanner;
 
 public class UD4P2E5 {
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean res = false;
@@ -28,7 +27,6 @@ public class UD4P2E5 {
                     break;
                 }
             }
-
         }
         if (res) {
             System.out.println("Las palabras SÍ están ordenadas alfabéticamente");

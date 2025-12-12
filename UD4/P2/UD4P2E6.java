@@ -3,7 +3,6 @@ package P2;
 import java.util.Scanner;
 
 public class UD4P2E6 {
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String[] palabras = new String[10];
