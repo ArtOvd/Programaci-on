@@ -75,14 +75,33 @@ public class Buscaminas {
         int fila = 0;
         int columna = 0;
         while (!valido) {
-            System.out.print("Indica la fila: ");
-            fila = sc.nextInt();
-            System.out.print("Indica la columna: ");
-            columna = sc.nextInt();
-            if ((fila <= tablero.length && columna <= tablero[0].length) && fila >= 0 && columna >= 0) {
+            System.out.print("Indica la fila (1-6): ");
+            fila = sc.nextInt() - 1;
+            System.out.print("Indica la columna (1-6): ");
+            columna = sc.nextInt() - 1;
+            if ((fila < tablero.length && columna < tablero[0].length) && fila >= 0 && columna >= 0) {
                 valido = true;
+            } else {
+                System.out.println("Error: fila invalida");
+                continue;
             }
             visible[fila][columna] = true;
+            if (tablero[fila][columna] == '0' ) {
+                for (int i = fila - 1; i <= fila + 1; i++) {
+                    for (int j = columna - 1; j <= columna + 1; j++) {
+                        if ((i < 0 || i >= tablero.length) || (j < 0 || j >= tablero[0].length)) {
+                            continue;
+                        }
+                        if (i == fila && j == columna) {
+                            continue;
+                        } else {
+                            if (tablero[i][j] == '0') {
+                                visible[i][j] = true;
+                            }
+                        }
+                    }
+                }
+            }
             if (tablero[fila][columna] == '*') {
                 System.out.println("Has encontrado a una mina. Partida acabada.");
                 return true;
@@ -95,7 +114,7 @@ public class Buscaminas {
         int contador = 0;
         for (int i = fila - 1; i <= fila + 1; i++) {
             for (int j = columna - 1; j <= columna + 1; j++) {
-                if ((i < 0 || i >= 6) || (j < 0 || j >= 6)) {
+                if ((i < 0 || i >= tablero.length) || (j < 0 || j >= tablero[0].length)) {
                     continue;
                 }
                 if (i == fila && j == columna) {
