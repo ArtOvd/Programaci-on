@@ -4,7 +4,7 @@ public class EjerciciosPrueba {
 
     static void main(String[] args) {
 
-        int[] regalos = {5, 1, 7, 2, 9, 3};
+        int[] regalos = {8,8,8,1,1,1};
         int max = 10;
         System.out.println(calcularViajes(max, regalos));
         /*
