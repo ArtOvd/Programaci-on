@@ -1,29 +1,57 @@
 package P1;
 
 public class Persona {
-    public String dni;
-    public String nombre;
-    public String apellido;
-    public int edad;
+    private String dni;
+    private String nombre;
+    private String apellido;
+    private int edad;
 
     public Persona() {};
 
     public Persona(String dni, String nombre, String apellido, int edad) {
+        setDni(dni);
+        setNombre(nombre);
+        setApellido(apellido);
+        setEdad(edad);
+    }
+
+    public String getDni() {
+        return dni;
+    }
+    public void setDni(String dni) {
         this.dni = dni;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public String getApellido() {
+        return apellido;
+    }
+    public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+    public int getEdad() {
+        return edad;
+    }
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 
     public void imprimirDatos() {
-        System.out.print(nombre + " " + apellido + " con DNI: " + dni + " ");
+        System.out.println("DNI: " + getDni());
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Apellido: " + getApellido());
+        System.out.println("Edad: " + getEdad());
     }
 
-    public void esMayorDeEdad() {
-        if  (edad >= 18) {
-            System.out.println("es mayor de edad.");
+    public boolean esMayorDeEdad() {
+        if (edad >= 18) {
+            return true;
         } else {
-            System.out.println("no es mayor de edad.");
+            return false;
         }
     }
 }
