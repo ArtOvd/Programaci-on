@@ -59,4 +59,21 @@ public class Rectangulo {
     public int calcularArea() {
         return Math.abs(getX1() - getX2()) *  Math.abs(getY1() - getY2()) ;
     }
+
+    public void setterDoble1() {
+        setX1(getX1());
+        setY1(getY1());
+    }
+
+    public void setterDoble2() {
+        setX2(getX2());
+        setY2(getY2());
+    }
+
+    public void setAll() {
+        setX1(getX1());
+        setY1(getY1());
+        setX2(getX2());
+        setY2(getY2());
+    }
 }

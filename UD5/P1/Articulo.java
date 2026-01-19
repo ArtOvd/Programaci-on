@@ -42,7 +42,33 @@ public class Articulo {
         System.out.println("Precio sin IVA: " + precio);
     }
 
-    public void calcularPVP() {
+    public void getPVP() {
         System.out.println("PVP: " + (precio + (precio * iva)));
+    }
+
+    public void getPVPDescuento(int descuento) {
+        System.out.println("PVP con descuento: " + ((precio + (precio * iva)) - ((precio + (precio * iva)) *  descuento / 100)));
+    }
+
+    public boolean vender(int cantidad) {
+        if (stock > 0) {
+            stock -= cantidad;
+            System.out.println("Venta realizada. Cantidad restante: " + stock);
+            return true;
+        } else {
+            System.out.println("Venta no realizada. No hay esos artículos en el stock.");
+            return false;
+        }
+    }
+
+    public boolean almacenar(int cantidad) {
+        if (stock < 100) {
+            stock += cantidad;
+            System.out.println("Almacenando. Cantidad actual: " + stock);
+            return true;
+        } else {
+            System.out.println("Almacén completo.");
+            return false;
+        }
     }
 }

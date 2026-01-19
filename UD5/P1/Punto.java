@@ -42,12 +42,10 @@ public class Punto {
     }
 
     public int calcularDistancia(Punto p) {
-        int x1 = this.x;
-        int y1 = this.y;
-        int cat1 = x1 -  p.getX();
-        int cat2 = y1 - p.getY();
+        int cat1 = Math.abs(this.x -  p.getX());
+        int cat2 = Math.abs(this.y - p.getY());
         double suma = ((cat1 * cat1) + (cat2 * cat2));
-        double gip = Math.sqrt(suma);
-        return (int) gip;
+        double distancia = Math.sqrt(suma);
+        return (int) distancia;
     }
 }

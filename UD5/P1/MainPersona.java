@@ -10,8 +10,11 @@ public class MainPersona {
         Persona persona2 = new Persona("22222222", "Vlad", "Vlados", 14);
         persona1.imprimirDatos();
         System.out.println(persona1.esMayorDeEdad());
+        System.out.println(persona1.esJubilado());
         persona2.imprimirDatos();
         System.out.println(persona2.esMayorDeEdad());
+        System.out.println(persona2.esJubilado());
+        System.out.println("La diferencia de edad es: " + persona1.diferenciaEdad(persona2));
     }
 
 }

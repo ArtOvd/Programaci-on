@@ -13,7 +13,7 @@ public class MainRectangulo {
         rectangulo2.mostrarRecangulo();
         System.out.println("Perimetro: " + rectangulo2.calcularPerimetro());
         System.out.println("Area: " + rectangulo2.calcularArea());
-        System.out.println("MODIFICACION DEL RECATNGULO 1:");
+        System.out.println("MODIFICACIÓN DEL RECTÁNGULO 1:");
         rectangulo1.setX1(rectangulo1.getX1() + 5);
         rectangulo1.setY1(rectangulo1.getY1() + 8);
         rectangulo1.setX2(rectangulo1.getX2() + 10);
