@@ -1,5 +1,7 @@
 package P1;
 
+import java.util.Random;
+
 public class Punto {
     private int x;
     private int y;
@@ -47,5 +49,11 @@ public class Punto {
         double suma = ((cat1 * cat1) + (cat2 * cat2));
         double distancia = Math.sqrt(suma);
         return (int) distancia;
+    }
+
+    public static Punto crearPuntoAleatorio() {
+        int x = new Random().nextInt(-100, 100);
+        int y = new Random().nextInt(-100, 100);
+        return new Punto(x, y);
     }
 }

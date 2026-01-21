@@ -3,10 +3,11 @@ package P1;
 public class Articulo {
     private String nombre;
     private double precio;
-    private double iva = 0.21;
+    private final double iva = 0.21;
+    private final double ivaReducido = 0.10;
+    private final double ivaMinima = 0.04;
     private int stock;
-
-    public Articulo() {};
+    private String categoria;
 
     public Articulo(String nombre, double precio, int stock) {
         if (nombre == null || precio < 0 || stock < 0) {
@@ -15,6 +16,7 @@ public class Articulo {
             setNombre(nombre);
             setPrecio(precio);
             setStock(stock);
+            setCategoria(categoria);
         }
     }
 
@@ -36,6 +38,12 @@ public class Articulo {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public String getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
     public void mostrarDatos() {
         System.out.println("Nombre: " + nombre);
@@ -43,11 +51,23 @@ public class Articulo {
     }
 
     public void getPVP() {
-        System.out.println("PVP: " + (precio + (precio * iva)));
+        if (categoria.equals("Hosteleria")) {
+            System.out.println("PVP: " + (precio + (precio * ivaReducido)));
+        } else if (categoria.equals("Medicamentos")) {
+            System.out.println("PVP: " + (precio + (precio * ivaMinima)));
+        } else {
+            System.out.println("PVP: " + (precio + (precio * iva)));
+        }
     }
 
     public void getPVPDescuento(int descuento) {
-        System.out.println("PVP con descuento: " + ((precio + (precio * iva)) - ((precio + (precio * iva)) *  descuento / 100)));
+        if (categoria.equals("Hosteleria")) {
+            System.out.println("PVP con descuento: " + ((precio + (precio * ivaReducido)) - ((precio + (precio * ivaReducido)) *  descuento / 100)));
+        } else if (categoria.equals("Medicamentos")) {
+            System.out.println("PVP con descuento: " + ((precio + (precio * ivaMinima)) - ((precio + (precio * ivaMinima)) *  descuento / 100)));
+        } else {
+            System.out.println("PVP con descuento: " + ((precio + (precio * iva)) - ((precio + (precio * iva)) *  descuento / 100)));
+        }
     }
 
     public boolean vender(int cantidad) {
