@@ -51,7 +51,7 @@ public class Articulo {
     }
 
     public boolean vender(int cantidad) {
-        if (stock > 0) {
+        if ((this.stock - cantidad) > 0) {
             stock -= cantidad;
             System.out.println("Venta realizada. Cantidad restante: " + stock);
             return true;
@@ -62,7 +62,7 @@ public class Articulo {
     }
 
     public boolean almacenar(int cantidad) {
-        if (stock < 100) {
+        if ((this.stock + cantidad) <= 100) {
             stock += cantidad;
             System.out.println("Almacenando. Cantidad actual: " + stock);
             return true;

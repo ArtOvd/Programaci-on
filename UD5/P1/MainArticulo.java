@@ -2,7 +2,7 @@ package P1;
 
 public class MainArticulo {
     public static void main(String[] args) {
-        Articulo articulo1 = new Articulo("Pijama", 10.0, 5);
+        Articulo articulo1 = new Articulo("Pijama", 10.0, 2);
         articulo1.mostrarDatos();
         articulo1.getPVP();
         System.out.println("MODIFICADO ");
