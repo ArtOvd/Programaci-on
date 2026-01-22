@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/UD2" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/UD3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/UD4" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/UD5" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

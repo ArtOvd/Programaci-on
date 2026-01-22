@@ -17,7 +17,7 @@ public class P3E18 {
         case 0: return "T";
         case 1: return "R";
         case 2: return "W";
-        case 3: return "A";
+        case 3: return "P1";
         case 4: return "G";
         case 5: return "M";
         case 6: return "Y";
