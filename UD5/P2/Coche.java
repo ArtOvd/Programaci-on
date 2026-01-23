@@ -6,10 +6,10 @@ public class Coche {
     private boolean metalizada;
     final String matricula;
     private String tipoCoche;
-    private int year;
+    private String year;
     private String seguro;
 
-    public Coche(String modelo, String color, boolean metalizada, String matricula, String tipoCoche, int year, String seguro) {
+    public Coche(String modelo, String color, boolean metalizada, String matricula, String tipoCoche, String year, String seguro) {
         setModel(modelo);
         setColor(color);
         setMetalizada(metalizada);
@@ -43,7 +43,7 @@ public class Coche {
         return tipoCoche;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -71,12 +71,15 @@ public class Coche {
             this.tipoCoche = tipoCoche;
         } else {
             this.tipoCoche = null;
-            System.out.println("Tipo de coche invalido");
         }
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear(String year) {
+        if (year.length() == 4) {
+            this.year = year;
+        } else {
+            this.year = year;
+        }
     }
 
     public void setSeguro(String seguro) {
@@ -84,7 +87,6 @@ public class Coche {
             this.seguro = seguro;
         } else {
             this.seguro = null;
-            System.out.println("Tipo de seguro invalido");
         }
     }
 
