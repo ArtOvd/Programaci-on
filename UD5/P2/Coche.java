@@ -4,16 +4,20 @@ public class Coche {
     private String modelo;
     private String color;
     private boolean metalizada;
-    private boolean matricula;
+    final String matricula;
     private String tipoCoche;
     private int year;
     private String seguro;
 
-    public Coche(String modelo, String color, boolean metalizada, boolean matricula, String tipoCoche, int year, String seguro) {
+    public Coche(String modelo, String color, boolean metalizada, String matricula, String tipoCoche, int year, String seguro) {
         setModel(modelo);
         setColor(color);
         setMetalizada(metalizada);
-        setMatricula(matricula);
+        if (!matricula.isEmpty()) {
+            this.matricula = matricula;
+        } else {
+            this.matricula = null;
+        }
         setTipoCoche(tipoCoche);
         setYear(year);
         setSeguro(seguro);
@@ -31,7 +35,7 @@ public class Coche {
         return metalizada;
     }
 
-    public boolean getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
@@ -57,10 +61,6 @@ public class Coche {
 
     public void setMetalizada(boolean metalizada) {
         this.metalizada = metalizada;
-    }
-
-    public void setMatricula(boolean matricula) {
-        this.matricula = matricula;
     }
 
     public void setTipoCoche(String tipoCoche) {
