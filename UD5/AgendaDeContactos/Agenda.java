@@ -8,13 +8,11 @@ public class Agenda {
     //OPCIÓN 1:
     public static void listContacts() {
         if (contactCount > 0) {
-            System.out.println("----------------------------------");
-            System.out.println("|       LISTA DE CONTACTOS       |");
-            System.out.println("----------------------------------");
+            System.out.println("==== LISTA DE CONTACTOS ====");
             for (int i = 0; i < contactCount; i++) {
                 System.out.println("Contacto " + (i + 1) + ":");
                 System.out.println(contactos[i].toString());
-                System.out.println("----------------------------------");
+            System.out.println("----------------------------");
             }
         } else {
             System.out.println("Todavía no hay ningún contacto guardado.");

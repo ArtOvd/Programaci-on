@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Programa {
     static final Scanner sc = new Scanner(System.in);
-    static Agenda miAgenda = new Agenda();
 
     public static void main(String[] args) {
         int opcion;
@@ -42,10 +41,10 @@ public class Programa {
         } while (opcion != 8);
     }
 
-    // metodos UI:
+    // métodos UI:
 
     private static void mostrarMenu() {
-        System.out.println("\n--- AGENDA DE CONTACTOS ---");
+        System.out.println("\n=== AGENDA DE CONTACTOS ===");
         System.out.println("1. Ver contactos.");
         System.out.println("2. Agregar contacto.");
         System.out.println("3. Eliminar contacto.");
@@ -60,7 +59,7 @@ public class Programa {
         Contacto contacto;
         boolean esValido = false;
         do {
-            System.out.println("--- AÑADIR CONTACTO ---");
+            System.out.println("=== AÑADIR CONTACTO ==");
             System.out.print("Nombre: ");
             String nombre = sc.nextLine();
             System.out.print("Teléfono: ");
@@ -70,7 +69,6 @@ public class Programa {
             contacto = new Contacto(nombre, tel, email);
             if (contacto.getNombre() != null && contacto.getTelefono() != null && contacto.getEmail() != null) {
                 Agenda.addContact(contacto);
-
                 System.out.println("Contacto añadido con éxito.");
                 esValido = true;
             } else {
