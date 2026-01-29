@@ -1,34 +1,31 @@
 package CuentaBancaria;
 
 public class Cuenta {
-    private String referencia;
+    private Cliente cliente;
     private double saldo;
 
-    public Cuenta(String referencia, double saldo) {
-        setReferencia(referencia);
-        setSaldo(saldo);
+    public Cuenta(Cliente cliente) {
+        setCliente(cliente);
+        this.saldo = 0;
     }
 
-    public String getReferencia() {
-        return referencia;
+    public Cliente getCliente() {
+        return cliente;
     }
+
     public double getSaldo() {
         return saldo;
     }
 
-    public void setReferencia(String referencia) {
-        if (referencia != null && referencia.length() >= 10) {
-            this.referencia = referencia;
-        }  else {
-            this.referencia = null;
-        }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
+
     public void setSaldo(double saldo) {
-        if (saldo >= -100) {
-            this.saldo = saldo;
-        } else {
-            this.saldo = -100;
+        if (saldo < 0) {
+            saldo = this.saldo;
         }
+        this.saldo = saldo;
     }
 
 }
