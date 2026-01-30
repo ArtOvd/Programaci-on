@@ -22,9 +22,6 @@ public class Cuenta {
     }
 
     public void setSaldo(double saldo) {
-        if (saldo < 0) {
-            saldo = this.saldo;
-        }
         this.saldo = saldo;
     }
 
