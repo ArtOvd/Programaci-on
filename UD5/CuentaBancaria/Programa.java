@@ -22,7 +22,7 @@ public class Programa {
                     uiRetirarDinero();
                     break;
                 case 4:
-
+                    uiTransferirDinero();
                     break;
                 case 5:
                     uiAgregarCuenta();
@@ -66,6 +66,40 @@ public class Programa {
         return numero;
     }
 
+    public static void uiIngresarDinero() {
+        if (Banco.cuentas.isEmpty()) {
+            System.out.println("No hay cuentas disponibles.");
+            return;
+        }
+        Banco.verCuentas();
+        System.out.print("Elige la cuenta para realizar el ingreso (nombre): ");
+        String nombre = elegirNombre();
+        System.out.print("Introduce la cantidad para ingresar: ");
+        double ingreso = pedirCantidad();
+        Banco.ingresarDinero(nombre, ingreso);
+        System.out.println("Ingreso realizado. Datos nuevos: ");
+        Banco.buscarCuenta(nombre);
+    }
+
+    public static void uiRetirarDinero() {
+        if (Banco.cuentas.isEmpty()) {
+            System.out.println("No hay cuentas disponibles.");
+            return;
+        }
+        Banco.verCuentas();
+        System.out.print("Introduce el nombre de la cuenta para retirar: ");
+        String nombre = elegirNombre();
+        System.out.print("Introduce la cantidad para retirar: ");
+        double cantidad = pedirCantidad();
+        boolean exito = Banco.retirarDinero(nombre, cantidad);
+        if (exito) {
+            System.out.println("Retirada realizada con éxito. Datos nuevos: ");
+            Banco.buscarCuenta(nombre);
+        } else {
+            System.out.println("No se puede retirar esa cantidad. El límite es -100€.");
+        }
+    }
+
     public static void uiAgregarCuenta() {
         System.out.println("====== AGREGAR CUENTA ======");
         String nombre, apellido;
@@ -94,6 +128,7 @@ public class Programa {
             Cliente nuevoCliente = new Cliente(nombre, apellido);
             Cuenta nuevaCuenta = new Cuenta(nuevoCliente);
             Banco.agregarCuenta(nuevaCuenta);
+
             System.out.println("Cuenta creada con éxito.");
         }
 
@@ -101,6 +136,10 @@ public class Programa {
     }
 
     public static void uiEliminarCuenta() {
+        if (Banco.cuentas.isEmpty()) {
+            System.out.println("Todavía  hay cuentas para eliminar.");
+            return;
+        }
         Banco.verCuentas();
         System.out.print("Elige el número de la cuenta para eliminar: ");
         while (true) {
@@ -117,23 +156,46 @@ public class Programa {
     }
 
     public static void uiBuscarCuenta() {
-        if (!Banco.cuentas.isEmpty()) {
-            System.out.println("====== BUSQUEDA DE CUENTAS ======");
-            System.out.print("Introduce el nombre del propietario: ");
-            while (true) {
-                String nombre = sc.nextLine().trim().toLowerCase();
-                if (nombre.length() >= 2) {
-                    System.out.println("===== Cuentas encontradas =====");
-                    Banco.buscarCuenta(nombre);
-                    break;
-                } else {
-                    System.out.print("Nombre no válido. Introduce otro nombre:");
-                }
-            }
-        } else {
-            System.out.println("Todavía no hay cuentas para buscar.");
+        if (Banco.cuentas.isEmpty()) {
+            System.out.println("Todavía hay cuentas par buscar.");
+            return;
         }
+        System.out.println("====== BUSQUEDA DE CUENTAS ======");
+        System.out.print("Introduce el nombre del propietario: ");
+        while (true) {
+            String nombre = sc.nextLine().trim().toLowerCase();
+            if (nombre.length() >= 2) {
+                System.out.println("===== Cuentas encontradas =====");
+                Banco.buscarCuenta(nombre);
+                break;
+            } else {
+                System.out.print("Nombre no válido. Introduce otro nombre:");
+            }
+        }
+    }
 
+    public static void uiTransferirDinero() {
+        if (Banco.cuentas.isEmpty()) {
+            System.out.println("No hay cuentas para realizar la transferencia.");
+            return;
+        }
+        System.out.print("Nombre del origen: ");
+        String nombreOrigen = elegirNombre();
+        System.out.print("Nombre del destino: ");
+        String nombreDestino = elegirNombre();
+        if (nombreOrigen.equalsIgnoreCase(nombreDestino)) {
+            System.out.println("No se puede transferir dinero a la misma cuenta.");
+            return;
+        }
+        System.out.print("Cantidad a transferir: ");
+        double cantidad = pedirCantidad();
+        if (Banco.transferirDinero(nombreOrigen, nombreDestino, cantidad)) {
+            System.out.println("Transferencia realizada con éxito.");
+            Banco.buscarCuenta(nombreOrigen);
+            Banco.buscarCuenta(nombreDestino);
+        } else {
+            System.out.println("Saldo insuficiente (Límite de crédito -100€ excedido).");
+        }
     }
 
     public static String elegirNombre() {
@@ -171,50 +233,4 @@ public class Programa {
         return cantidad;
     }
 
-    public static void uiIngresarDinero() {
-        String nombre = elegirNombre();
-        System.out.print("Introduce la cantidad para ingresar: ");
-        double ingreso = pedirCantidad();
-        Banco.verCuentas();
-        Banco.ingresarDinero(nombre, ingreso);
-        System.out.println("Ingreso realizado. Datos nuevos: ");
-        Banco.buscarCuenta(nombre);
-    }
-
-    public static void uiRetirarDinero() {
-        if (Banco.cuentas.isEmpty()) {
-            System.out.println("No hay cuentas disponibles.");
-            return;
-        }
-        String nombre = elegirNombre();
-        System.out.print("Introduce la cantidad para retirar: ");
-        double cantidad = pedirCantidad();
-        boolean exito = Banco.retirarDinero(nombre, cantidad);
-        if (exito) {
-            System.out.println("Retirada realizada con éxito. Datos nuevos: ");
-            Banco.buscarCuenta(nombre);
-        } else {
-            System.out.println("No se puede retirar esa cantidad. El límite es -100€.");
-        }
-    }
-
-    public static void uiTransferirDinero() {
-        if (!Banco.cuentas.isEmpty()) {
-            Banco.verCuentas();
-            System.out.print("Introduce el nombre del enviador: ");
-            String enviador = sc.nextLine().trim();
-            System.out.print("Introduce el nombre del receptor: ");
-            String receptor = sc.nextLine().trim();
-            double cantidad = 0;
-            if (enviador.equals(receptor)) {
-                System.out.println("No se puede elegir la misma cuenta.");
-            } else {
-                System.out.print("Introduce la cantidad de transferencia: ");
-                cantidad = sc.nextDouble();
-                sc.nextLine();
-            }
-            Banco.ingresarDinero(receptor, cantidad);
-
-        }
-    }
 }

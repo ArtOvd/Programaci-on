@@ -11,6 +11,7 @@ public class Banco {
             for (int i = 0; i < cuentas.size(); i++) {
                 Cuenta cuenta = cuentas.get(i);
                 System.out.println("Cuenta " + (i + 1) + ":");
+                System.out.println("IBAN: " + cuenta.getIban());
                 System.out.print("Nombre completo: " + cuenta.getCliente().getNombre());
                 System.out.print(" " + cuenta.getCliente().getApellido());
                 System.out.println(" | Saldo: " + cuenta.getSaldo() + "€");
@@ -19,6 +20,39 @@ public class Banco {
         } else {
             System.out.println("Todavía no hay ningúna cuenta para mostrar.");
         }
+    }
+
+    public static void ingresarDinero(String nombre, double cantidad) {
+        for (int i = 0; i < Banco.cuentas.size(); i++) {
+            if (Banco.cuentas.get(i).getCliente().getNombre().equalsIgnoreCase(nombre)) {
+                double saldoActual = Banco.cuentas.get(i).getSaldo();
+                cuentas.get(i).setSaldo(saldoActual + cantidad);
+                break;
+            }
+        }
+    }
+
+    public static boolean retirarDinero(String nombre, double cantidad) {
+        for (int i = 0; i < Banco.cuentas.size(); i++) {
+            Cuenta cuenta = Banco.cuentas.get(i);
+            if (cuenta.getCliente().getNombre().equalsIgnoreCase(nombre)) {
+                double saldoActual = cuenta.getSaldo();
+                if (saldoActual - cantidad < -100) {
+                    return false;
+                }
+                cuenta.setSaldo(saldoActual - cantidad);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean transferirDinero(String nombreOrigen, String nombreDestino, double cantidad) {
+        if (retirarDinero(nombreOrigen, cantidad)) {
+            ingresarDinero(nombreDestino, cantidad);
+            return true;
+        }
+        return false;
     }
 
     public static void agregarCuenta(Cuenta cuenta) {
@@ -34,6 +68,7 @@ public class Banco {
         for (int i = 0; i < Banco.cuentas.size(); i++) {
             if (Banco.cuentas.get(i).getCliente().getNombre().toLowerCase().contains(nombre) || Banco.cuentas.get(i).getCliente().getNombre().equalsIgnoreCase(nombre)) {
                 System.out.println("Cuenta " + (i + 1) + ":");
+                System.out.println("IBAN: " + Banco.cuentas.get(i).getIban());
                 System.out.print("Nombre completo: " + Banco.cuentas.get(i).getCliente().getNombre());
                 System.out.print(" " + Banco.cuentas.get(i).getCliente().getApellido());
                 System.out.println(" | Saldo: " + Banco.cuentas.get(i).getSaldo() + "€");
@@ -65,32 +100,4 @@ public class Banco {
         }
     }
 
-    public static void ingresarDinero(String nombre, double cantidad) {
-        for (int i = 0; i < Banco.cuentas.size(); i++) {
-            if (Banco.cuentas.get(i).getCliente().getNombre().equalsIgnoreCase(nombre)) {
-                double saldoActual = Banco.cuentas.get(i).getSaldo();
-                cuentas.get(i).setSaldo(saldoActual + cantidad);
-                break;
-            }
-        }
-    }
-
-    public static boolean retirarDinero(String nombre, double cantidad) {
-        for (int i = 0; i < Banco.cuentas.size(); i++) {
-            Cuenta cuenta = Banco.cuentas.get(i);
-            if (cuenta.getCliente().getNombre().equalsIgnoreCase(nombre)) {
-                double saldoActual = cuenta.getSaldo();
-                if (saldoActual - cantidad < -100) {
-                    return false;
-                }
-                cuenta.setSaldo(saldoActual - cantidad);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void transferirDinero(String enviador, String receptor, double cantidad) {
-
-    }
 }
