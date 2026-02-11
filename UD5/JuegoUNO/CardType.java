@@ -1,5 +1,5 @@
 package JuegoUNO;
 
 public enum CardType {
-    NUMBER, COLOR_CHANGE, SKIP, REVERSE;
+    NUMBER, SWITCH, SKIP, REVERSE, DRAW2, DRAW4;
 }
