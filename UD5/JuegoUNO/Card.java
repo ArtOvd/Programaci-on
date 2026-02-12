@@ -55,8 +55,4 @@ public class Card {
                 "└─────────┘";
     }
 
-    public static String printCardsArray(ArrayList<Card> cards) {
-        return
-    }
-
 }
