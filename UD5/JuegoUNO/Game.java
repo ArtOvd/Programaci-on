@@ -1,19 +1,23 @@
 package JuegoUNO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Game {
     private Table table;
     private ArrayList<Player> players;
     private Card currentCard;
+    private CardColor currentColor;
     private int direction = 1;
     private int currentPlayerIndex = 0;
 
     public Game() {
         table = new Table();
         players = new ArrayList<>();
-        Player p1 = players.add(new Player("Artem"));
-        players.add(new Player("Vlad"));
+        Player p1 = new Player("Artem");
+        Player p2 = new Player("Vlad");
+        players.add(p1);
+        players.add(p2);
         currentCard = null;
     }
 
@@ -50,7 +54,6 @@ public class Game {
     }
 
     public void startGame() {
-        // Repartir cartas a los jugadores
         dealCards();
         // Obtener carta del turno actual y moverla al descarte
         currentCard = table.getMainDeck().removeLast();
@@ -69,10 +72,15 @@ public class Game {
 
     }
 
-    public void gameTurn() {
+    public void currentCard() {
         System.out.println("CARTA ACTUAL:");
         System.out.println(getCurrentCard().printCard());
-        System.out.println("JUGADOR " + );
+    }
+
+    public void currentPlayer() {
+        System.out.println("=========================");
+        System.out.println("JUGADOR: " + players.get(currentPlayerIndex).getName());
+        System.out.println("=========================");
         System.out.println("TUS CARTAS:");
         Player.printHand(players.get(currentPlayerIndex).getHand());
     }
@@ -82,11 +90,84 @@ public class Game {
     }
 
     public void placeCard(int pos) {
+        setCurrentCard(players.get(currentPlayerIndex).getHand().get(pos));
+        if (currentCard.getColor().equals(CardColor.WILD)) {
+            if (currentCard.getType().equals(CardType.DRAW4)) {
+                int nextPlayerIndex = (currentPlayerIndex + direction + players.size()) % players.size();
+                Player victim = players.get(nextPlayerIndex);
+                for (int i = 0; i < 4; i++) {
+                    if (table.getMainDeck().isEmpty()) {
+                        newShuffle();
+                    }
+                    victim.getHand().add(table.getMainDeck().removeLast());
+                }
+                System.out.println("Jugador" + victim.getName() + "salta su turno...");
+                nextTurn();
+
+            }
+        }
+        players.get(currentPlayerIndex).getHand().remove(pos);
+        table.getDiscardDeck().add(currentCard);
 
     }
 
-    public boolean compareCards() {
-        if (currentCard.getColor().equals(players.g)) {}
+    public boolean compareCards(int pos) {
+        Card selectedCard = players.get(currentPlayerIndex).getHand().get(pos - 1);
+
+        boolean colorMatch = selectedCard.getColor().equals(currentCard.getColor());
+        boolean valueMatch = (selectedCard.getValue() == currentCard.getValue() && selectedCard.getValue() != -1);
+        boolean typeMatch = selectedCard.getType().equals(currentCard.getType());
+        boolean isWild = selectedCard.getColor().equals(CardColor.WILD);
+
+        return colorMatch || valueMatch || typeMatch || isWild;
     }
 
+    public void playersTurn(int option) {
+        if (option == 0) {
+            if (!table.getMainDeck().isEmpty()) {
+                players.get(currentPlayerIndex).getHand().add(table.getMainDeck().removeLast());
+                return;
+            } else {
+                System.out.println("El mazo esta vacío. Barajando...");
+                if (newShuffle()) {
+                    players.get(currentPlayerIndex).getHand().add(table.getMainDeck().removeLast());
+                } else {
+                    System.out.println("No se puede robar más cartas.");
+                    return;
+                }
+            }
+            return;
+        }
+        if (option == -1) {
+            return;
+        }
+        placeCard(option - 1);
+    }
+
+    public void showRest() {
+        System.out.println("Cartas restantes: " + table.getMainDeck().size());
+    }
+
+    public boolean newShuffle() {
+        if (table.getMainDeck().isEmpty() && table.getDiscardDeck().size() > 1) {
+            table.getDiscardDeck().remove(currentCard);
+            table.getMainDeck().addAll(table.getDiscardDeck());
+            Collections.shuffle(table.getMainDeck());
+            table.getDiscardDeck().clear();
+            table.getDiscardDeck().add(currentCard);
+            System.out.println("Mazo barajado!");
+            return true;
+        } else if (table.getDiscardDeck().isEmpty()) {
+            System.out.println("No hay cartas para barajar!");
+        }
+        return false;
+    }
+
+    public boolean endGame() {
+        if (players.get(currentPlayerIndex).getHand().isEmpty()) {
+            System.out.println("EL JUGADOR " + players.get(currentPlayerIndex).getName().toUpperCase() + " HA GANADO!");
+            return true;
+        }
+        return false;
+    }
 }

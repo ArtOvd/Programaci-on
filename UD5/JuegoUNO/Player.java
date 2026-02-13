@@ -6,6 +6,7 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
 
     private String name;
+
     public Player(String name) {
         setName(name);
     }
@@ -27,18 +28,17 @@ public class Player {
     }
 
     public static void printHand(ArrayList<Card> hand) {
-        if (hand.isEmpty()) {
-            System.out.println("Your hand is empty.");
-            return;
-        }
-        for (int i = 0; i < hand.size(); i++) {
-            System.out.printf("    [%d]      ", i + 1);
-        }
-        System.out.println();
-        for (int i = 0; i < 5; i++) {
-            for (Card card : hand) {
-                String[] lines = card.printCard().split("\n");
-                System.out.print(lines[i] + "  ");
+        for (int i = 0; i < hand.size(); i += 12) {
+            int end = Math.min(i + 12, hand.size());
+
+            for (int j = i; j < end; j++) System.out.printf("    [%2d]     ", j + 1);
+            System.out.println();
+
+            for (int line = 0; line < 5; line++) {
+                for (int j = i; j < end; j++) {
+                    System.out.print(hand.get(j).printCard().split("\n")[line] + "  ");
+                }
+                System.out.println();
             }
             System.out.println();
         }
