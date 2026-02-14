@@ -29,6 +29,14 @@ public class Game {
         this.players = players;
     }
 
+    public CardColor getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(CardColor currentColor) {
+        this.currentColor = currentColor;
+    }
+
     public Card getCurrentCard() {
         return currentCard;
     }
@@ -58,6 +66,7 @@ public class Game {
         // Obtener carta del turno actual y moverla al descarte
         currentCard = table.getMainDeck().removeLast();
         table.getDiscardDeck().add(currentCard);
+        this.currentColor = currentCard.getColor();
     }
 
     public void dealCards() {
@@ -90,35 +99,59 @@ public class Game {
     }
 
     public void placeCard(int pos) {
-        setCurrentCard(players.get(currentPlayerIndex).getHand().get(pos));
-        if (currentCard.getColor().equals(CardColor.WILD)) {
-            if (currentCard.getType().equals(CardType.DRAW4)) {
-                int nextPlayerIndex = (currentPlayerIndex + direction + players.size()) % players.size();
-                Player victim = players.get(nextPlayerIndex);
+        Card playedCard = players.get(currentPlayerIndex).getHand().get(pos);
+        players.get(currentPlayerIndex).getHand().remove(pos);
+        setCurrentCard(playedCard);
+        table.getDiscardDeck().add(playedCard);
+
+        if (!playedCard.getColor().equals(CardColor.WILD)) {
+            this.currentColor = playedCard.getColor();
+        }
+
+        if (playedCard.getColor().equals(CardColor.WILD)) {
+            if (playedCard.getType().equals(CardType.DRAW4)) {
+                int nextIdx = (currentPlayerIndex + direction + players.size()) % players.size();
+                Player victim = players.get(nextIdx);
                 for (int i = 0; i < 4; i++) {
-                    if (table.getMainDeck().isEmpty()) {
-                        newShuffle();
-                    }
+                    if (table.getMainDeck().isEmpty()) newShuffle();
                     victim.getHand().add(table.getMainDeck().removeLast());
                 }
-                System.out.println("Jugador" + victim.getName() + "salta su turno...");
+                System.out.println("Jugador " + victim.getName() + " roba 4 y salta su turno.");
                 nextTurn();
-
             }
         }
-        players.get(currentPlayerIndex).getHand().remove(pos);
-        table.getDiscardDeck().add(currentCard);
 
+        if (playedCard.getType().equals(CardType.DRAW2)) {
+            int nextIdx = (currentPlayerIndex + direction + players.size()) % players.size();
+            Player victim = players.get(nextIdx);
+            for (int i = 0; i < 2; i++) {
+                if (table.getMainDeck().isEmpty()) newShuffle();
+                victim.getHand().add(table.getMainDeck().removeLast());
+            }
+            System.out.println("Jugador " + victim.getName() + " roba 2 y salta su turno.");
+            nextTurn();
+        }
+
+        if (playedCard.getType().equals(CardType.REVERSE)) {
+            this.direction *= -1;
+            if (players.size() == 2) {
+                System.out.println("Reverse en partida de 2: saltas el turno del rival.");
+                nextTurn();
+            }
+        }
+
+        if (playedCard.getType().equals(CardType.SKIP)) {
+            System.out.println("Salto de turno.");
+            nextTurn();
+        }
     }
 
     public boolean compareCards(int pos) {
         Card selectedCard = players.get(currentPlayerIndex).getHand().get(pos - 1);
-
-        boolean colorMatch = selectedCard.getColor().equals(currentCard.getColor());
+        boolean colorMatch = selectedCard.getColor().equals(this.currentColor);
         boolean valueMatch = (selectedCard.getValue() == currentCard.getValue() && selectedCard.getValue() != -1);
-        boolean typeMatch = selectedCard.getType().equals(currentCard.getType());
+        boolean typeMatch = selectedCard.getType().equals(currentCard.getType()) && !selectedCard.getType().equals(CardType.NUMBER);
         boolean isWild = selectedCard.getColor().equals(CardColor.WILD);
-
         return colorMatch || valueMatch || typeMatch || isWild;
     }
 
@@ -169,5 +202,13 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public void messageUno() {
+        if (players.get(currentPlayerIndex).getHand().size() == 1) {
+            System.out.println("===========");
+            System.out.println("|   UNO!  |");
+            System.out.println("===========");
+        }
     }
 }
