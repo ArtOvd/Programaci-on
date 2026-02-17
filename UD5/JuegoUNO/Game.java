@@ -63,10 +63,14 @@ public class Game {
 
     public void startGame() {
         dealCards();
-        // Obtener carta del turno actual y moverla al descarte
         currentCard = table.getMainDeck().removeLast();
         table.getDiscardDeck().add(currentCard);
         this.currentColor = currentCard.getColor();
+        if (this.currentColor.equals(CardColor.WILD)) {
+            CardColor[] colors = {CardColor.RED, CardColor.BLUE, CardColor.GREEN, CardColor.YELLOW};
+            int randomIndex = (int) (Math.random() * colors.length);
+            this.currentColor = colors[randomIndex];
+        }
     }
 
     public void dealCards() {
