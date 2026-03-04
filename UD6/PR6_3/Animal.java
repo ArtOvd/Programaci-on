@@ -4,6 +4,6 @@ public class Animal {
     Animal() {}
 
     public String cantar() {
-        return Animal.class.getName();
+        return "Animal ";
     }
 }
