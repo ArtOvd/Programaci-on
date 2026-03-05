@@ -9,6 +9,17 @@ public class Mago extends Personaje{
     }
 
     public void habilidadEspecial(Personaje enemigo){
+        if (enemigo.estaVivo()) {
+            if ((this.mana - 10) >= 0) {
+                atacar(enemigo);
+                atacar(enemigo);
+                this.mana -= 10;
+            }
+        }
+    }
 
+    @Override
+    public void atacar(Personaje enemigo) {
+        enemigo.recibirDano(ataqueBase + nivel);
     }
 }
