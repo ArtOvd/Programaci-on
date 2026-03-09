@@ -6,10 +6,10 @@ public class Caballero extends Guerrero{
         this.vida += 20;
     }
 
-    public void atacar(Personaje enemigo){
-        super.atacar(enemigo);
-        enemigo.recibirDano(5);
+    @Override
+    public void recibirDano(int dano){
+        int danoReducido = (int) (dano * 0.7);
+        super.recibirDano(danoReducido);
     }
-
 
 }

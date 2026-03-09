@@ -5,17 +5,20 @@ public class HechiceroOscuro extends Mago{
         super(nombre, vida, ataqueBase, nivel, mana);
     }
 
-
-
     @Override
     public void habilidadEspecial(Personaje enemigo) {
-        if (enemigo.estaVivo()) {
-            super.habilidadEspecial(enemigo);
-            super.atacar(enemigo);
-            if (enemigo.vida - 5 >= 0) {
+        if (this.mana >= 10) {
+            if (enemigo.estaVivo()) {
+                enemigo.recibirDano((ataqueBase + nivel) * 3);
+                if (enemigo.estaVivo()) {
+                    this.vida += 5;
                 enemigo.recibirDano(5);
-                this.vida += 5;
+                }
+                this.mana -= 10;
             }
+        } else {
+            System.out.println("No hay mana");
         }
     }
+
 }

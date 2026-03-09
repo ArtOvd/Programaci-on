@@ -1,6 +1,6 @@
 package MiniRPG;
 
-public class Mago extends Personaje{
+public abstract class Mago extends Personaje{
     protected int mana;
 
     public Mago(String nombre, int vida, int ataqueBase, int nivel, int mana){
@@ -8,15 +8,7 @@ public class Mago extends Personaje{
         this.mana = mana;
     }
 
-    public void habilidadEspecial(Personaje enemigo){
-        if (enemigo.estaVivo()) {
-            if ((this.mana - 10) >= 0) {
-                atacar(enemigo);
-                atacar(enemigo);
-                this.mana -= 10;
-            }
-        }
-    }
+    public abstract void habilidadEspecial(Personaje enemigo);
 
     @Override
     public void atacar(Personaje enemigo) {
