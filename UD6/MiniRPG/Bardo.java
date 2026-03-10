@@ -9,7 +9,7 @@ public class Bardo extends Arquero {
     public void recibirDano(int dano){
         double blockChance = Math.random();
         if (blockChance <= 0.3) {
-            System.out.println(this.nombre + "esquivó el ataque!");
+            System.out.println(this.getClass().getSimpleName() + " " + this.nombre + " esquivó el ataque!");
         } else {
             super.recibirDano(dano);
         }

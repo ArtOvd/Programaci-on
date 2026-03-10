@@ -14,7 +14,9 @@ public abstract class Personaje {
     }
 
     public void atacar(Personaje enemigo) {
+        System.out.println(getClass().getSimpleName() + " " +  this.nombre + " ataca a " + enemigo.getClass().getSimpleName() + " " + enemigo.nombre);
         enemigo.recibirDano(ataqueBase);
+        System.out.println(enemigo.getClass().getSimpleName() + " " + enemigo.nombre + " ahora tiene " + enemigo.vida + " HP");
     }
 
     public void recibirDano(int cantidad) {
@@ -30,7 +32,7 @@ public abstract class Personaje {
     }
 
     public String toString() {
-        return "Nombre: " + this.nombre + " | " + "Vida restante: " + this.vida + " | " + "Ataque base: " + this.ataqueBase + " | " + "Nivel: " + this.nivel;
+        return "· Clase: " + this.getClass().getSimpleName() + "\n· Nombre: " + this.nombre + "\n· Vida restante: " + this.vida + "\n· Ataque base: " + this.ataqueBase + "\n· Nivel: " + this.nivel;
     }
 
 }
