@@ -8,8 +8,6 @@ public class Paladin extends Guerrero {
     @Override
     public void atacar(Personaje enemigo) {
         int ataque = (int) (ataqueBase + (nivel * 1.5));
-        System.out.println(getClass().getSimpleName() + " " +  this.nombre + " ataca a " + enemigo.getClass().getSimpleName() + " " + enemigo.nombre);
         enemigo.recibirDano(ataque);
-        System.out.println(enemigo.getClass().getSimpleName() + " " + enemigo.nombre + " ahora tiene " + enemigo.vida + " HP");
     }
 }

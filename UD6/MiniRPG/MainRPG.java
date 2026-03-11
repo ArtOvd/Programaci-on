@@ -33,16 +33,27 @@ public class MainRPG {
                     System.out.println("El atacante " + equipo.get(atacante).nombre + " usa un ataque especial!");
                     magoAtacante.habilidadEspecial(equipo.get(defensor));
                 } else {
+                    System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
+
                     magoAtacante.atacar(equipo.get(defensor));
                 }
+                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ahora tiene " + equipo.get(defensor).vida + " HP");
+            } else if (equipo.get(atacante) instanceof Ballestero ballesteroAtacante && ballesteroAtacante.getRecargado()) {
+                continue;
             } else {
+                System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
                 equipo.get(atacante).atacar(equipo.get(defensor));
+                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ahora tiene " + equipo.get(defensor).vida + " HP");
+            }
+
+            if (!equipo.get(defensor).estaVivo()) {
+                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ha muerto!");
             }
             turno++;
         }
         System.out.println("\n ===== RESULTADOS DE BATALLA =====");
-        for (int i = 0; i < equipo.size(); i++) {
-            System.out.println(equipo.get(i).toString());
+        for (Personaje personaje : equipo) {
+            System.out.println(personaje.toString());
             System.out.println("===================");
         }
     }

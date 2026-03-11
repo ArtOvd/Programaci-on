@@ -12,9 +12,7 @@ public abstract class Mago extends Personaje{
 
     @Override
     public void atacar(Personaje enemigo) {
-        System.out.println(getClass().getSimpleName() + " " +  this.nombre + " ataca a " + enemigo.getClass().getSimpleName() + " " + enemigo.nombre);
         enemigo.recibirDano(ataqueBase + nivel);
-        System.out.println(enemigo.getClass().getSimpleName() + " " + enemigo.nombre + " ahora tiene " + enemigo.vida + " HP");
     }
 
     @Override
