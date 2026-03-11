@@ -8,18 +8,16 @@ public class HechiceroOscuro extends Mago {
     @Override
     public void habilidadEspecial(Personaje enemigo) {
         if (this.mana >= 10) {
-            if (enemigo.estaVivo()) {
                 int vidaAntesAtaque = enemigo.vida;
-                enemigo.recibirDano((ataqueBase + nivel) * 3);
-                if (enemigo.estaVivo() && vidaAntesAtaque > enemigo.vida ) {
-                    this.vida += 5;
-                    System.out.println(getClass().getSimpleName()+ " " + this.nombre + " roba 5 puntos de vida de " + enemigo.getClass().getSimpleName() + " " + enemigo.nombre);
-                    enemigo.recibirDano(5);
+                int danyo = enemigo.recibirDano((ataqueBase + nivel) * 3);
+                if (danyo > 0 && enemigo.estaVivo()) {
+                    int roba = enemigo.recibirDano(5);
+                    vida += roba;
+                    System.out.println(getClass().getSimpleName()+ " " + this.nombre + " roba " + roba + " puntos de vida de " + enemigo.getClass().getSimpleName() + " " + enemigo.nombre);
                 }
                 this.mana -= 10;
-            }
         } else {
-            System.out.println("No hay mana para atacar.");
+            System.out.println("No hay mana para habilidad especial.");
         }
     }
 

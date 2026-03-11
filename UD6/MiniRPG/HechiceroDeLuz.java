@@ -8,16 +8,14 @@ public class HechiceroDeLuz extends Mago{
     @Override
     public void habilidadEspecial(Personaje enemigo) {
         if (this.mana >= 6) {
-            if (enemigo.estaVivo()) {
                 if (enemigo instanceof HechiceroOscuro) {
                     enemigo.recibirDano((ataqueBase + nivel) * 4);
                 } else {
                     enemigo.recibirDano((ataqueBase + nivel) * 2);
                 }
                 this.mana -= 6;
-            }
         } else {
-            System.out.println("No hay mana");
+            System.out.println("No hay mana para atacar.");
         }
     }
 }

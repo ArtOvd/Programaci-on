@@ -1,10 +1,11 @@
 package MiniRPG;
 
 public class Ballestero extends Arquero {
-    private boolean recargando;
+
+    private boolean recargando = false;
+
     public Ballestero(String nombre, int vida, int ataqueBase, int nivel) {
         super(nombre, vida, ataqueBase, nivel);
-        setRecargado(false);
     }
 
     public boolean getRecargado() {
@@ -18,7 +19,6 @@ public class Ballestero extends Arquero {
     @Override
     public void atacar(Personaje enemigo) {
         if (recargando) {
-            System.out.println("Ataque de ballestero todavía está recargando...");
             setRecargado(false);
         } else {
             enemigo.recibirDano(ataqueBase + (nivel * 5));

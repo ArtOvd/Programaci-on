@@ -13,16 +13,12 @@ public abstract class Personaje {
         this.nivel = nivel;
     }
 
-    public void atacar(Personaje enemigo) {
-        enemigo.recibirDano(ataqueBase);
-    }
+    public abstract void atacar(Personaje enemigo);
 
-    public void recibirDano(int cantidad) {
-        if ((vida - cantidad) < 0) {
-            this.vida = 0;
-        } else {
-            this.vida -= cantidad;
-        }
+    public int recibirDano(int cantidad) {
+        int danyo = Math.min(vida, cantidad);
+        vida -= danyo;
+        return danyo;
     }
 
     public boolean estaVivo() {

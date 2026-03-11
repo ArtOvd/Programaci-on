@@ -7,9 +7,9 @@ public class Caballero extends Guerrero{
     }
 
     @Override
-    public void recibirDano(int dano){
-        int danoReducido = (int) (dano * 0.7);
-        super.recibirDano(danoReducido);
+    public int recibirDano(int dano){
+        //int danoReducido = (int) (dano * 0.7);
+        return super.recibirDano((int) (dano * 0.7));
     }
 
 }

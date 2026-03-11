@@ -6,12 +6,13 @@ public class Bardo extends Arquero {
     }
 
     @Override
-    public void recibirDano(int dano){
+    public int recibirDano(int dano){
         double blockChance = Math.random();
         if (blockChance <= 0.3) {
             System.out.println(this.getClass().getSimpleName() + " " + this.nombre + " esquivó el ataque!");
+            return 0;
         } else {
-            super.recibirDano(dano);
+            return super.recibirDano(dano);
         }
 
     }

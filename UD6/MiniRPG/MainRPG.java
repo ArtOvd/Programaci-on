@@ -13,7 +13,7 @@ public class MainRPG {
         equipo.add(new HechiceroDeLuz("magoLuz1", 80, 15, 3, 50));
         equipo.add(new HechiceroOscuro("magoOscuro1", 70, 20, 3, 40));
         int turno = 1;
-        int atacante, defensor = 0;
+        int atacante, defensor;
 
         for (int i = 0; i < 15; i++) {
             System.out.println("================");
@@ -23,27 +23,28 @@ public class MainRPG {
                 atacante = (int) (Math.random() * equipo.size());
                 defensor = (int) (Math.random() * equipo.size());
             } while (atacante == defensor || !equipo.get(atacante).estaVivo() || !equipo.get(defensor).estaVivo());
+
             System.out.println("Atacante de turno actual: ");
             System.out.println(equipo.get(atacante).toString());
             System.out.println("Defensor de turno actual: ");
             System.out.println(equipo.get(defensor).toString());
+
             if (equipo.get(atacante) instanceof Mago magoAtacante) {
                 double ataqueEspecial = Math.random();
                 if (ataqueEspecial <= 0.3) {
                     System.out.println("El atacante " + equipo.get(atacante).nombre + " usa un ataque especial!");
                     magoAtacante.habilidadEspecial(equipo.get(defensor));
                 } else {
-                    System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
-
+                    mostrarMensajeAtaque(equipo, atacante, defensor);
                     magoAtacante.atacar(equipo.get(defensor));
                 }
-                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ahora tiene " + equipo.get(defensor).vida + " HP");
+                mostrarMensajeHP(equipo, atacante, defensor);
             } else if (equipo.get(atacante) instanceof Ballestero ballesteroAtacante && ballesteroAtacante.getRecargado()) {
-                continue;
+                System.out.println("Ataque de ballestero todavía está recargando...");
             } else {
-                System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
+                mostrarMensajeAtaque(equipo, atacante, defensor);
                 equipo.get(atacante).atacar(equipo.get(defensor));
-                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ahora tiene " + equipo.get(defensor).vida + " HP");
+                mostrarMensajeHP(equipo, atacante, defensor);
             }
 
             if (!equipo.get(defensor).estaVivo()) {
@@ -56,5 +57,13 @@ public class MainRPG {
             System.out.println(personaje.toString());
             System.out.println("===================");
         }
+    }
+
+    public static void mostrarMensajeAtaque(ArrayList<Personaje> equipo, int atacante, int defensor) {
+        System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
+    }
+
+    public static void mostrarMensajeHP(ArrayList<Personaje> equipo, int atacante, int defensor) {
+        System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " tiene " + equipo.get(defensor).vida + " HP");
     }
 }
