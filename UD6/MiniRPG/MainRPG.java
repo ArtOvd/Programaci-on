@@ -1,69 +1,158 @@
 package MiniRPG;
 
+import PR6_1.Persona;
+
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MainRPG {
-    public static void main(String[] args) {
-        ArrayList<Personaje> equipo = new ArrayList<>();
-        equipo.add(new Caballero("caballero1", 100, 20, 3));
-        equipo.add(new Paladin("paladin1", 125, 15, 3));
-        equipo.add(new Bardo("bardo1", 90, 10, 3));
-        equipo.add(new Ballestero("ballestero1", 80, 20, 3));
-        equipo.add(new HechiceroDeLuz("magoLuz1", 80, 15, 3, 50));
-        equipo.add(new HechiceroOscuro("magoOscuro1", 70, 20, 3, 40));
-        int turno = 1;
-        int atacante, defensor;
+    public static Random aleatorio = new Random();
 
+    public static void main(String[] args) {
+        ArrayList<Personaje> equipo1 = new ArrayList<>();
+        equipo1.add(new Caballero("caballero1", 100, 20, 3));
+        equipo1.add(new Paladin("paladin1", 125, 15, 3));
+        equipo1.add(new Bardo("bardo1", 90, 10, 3));
+        equipo1.add(new Ballestero("ballestero1", 80, 20, 3));
+        equipo1.add(new HechiceroDeLuz("magoLuz1", 80, 15, 3, 50));
+        equipo1.add(new HechiceroOscuro("magoOscuro1", 70, 20, 3, 40));
+        ArrayList<Personaje> equipo2 = new ArrayList<>();
+        equipo2.add(new Caballero("caballero2", 100, 20, 3));
+        equipo2.add(new Paladin("paladin2", 125, 15, 3));
+        equipo2.add(new Bardo("bardo2", 90, 10, 3));
+        equipo2.add(new Ballestero("ballestero2", 80, 20, 3));
+        equipo2.add(new HechiceroDeLuz("magoLuz2", 80, 15, 3, 50));
+        equipo2.add(new HechiceroOscuro("magoOscuro2", 70, 20, 3, 40));
+        int turno = 1;
+        Personaje atacante, defensor;
+        boolean turnoEquipo1 = true;
+        ArrayList<Personaje> aliados = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
+            aliados.clear();
             System.out.println("================");
             System.out.println("||  TURNO " + turno + "  ||");
             System.out.println("================");
             do {
-                atacante = (int) (Math.random() * equipo.size());
-                defensor = (int) (Math.random() * equipo.size());
-            } while (atacante == defensor || !equipo.get(atacante).estaVivo() || !equipo.get(defensor).estaVivo());
-
-            System.out.println("Atacante de turno actual: ");
-            System.out.println(equipo.get(atacante).toString());
-            System.out.println("Defensor de turno actual: ");
-            System.out.println(equipo.get(defensor).toString());
-
-            if (equipo.get(atacante) instanceof Mago magoAtacante) {
-                double ataqueEspecial = Math.random();
-                if (ataqueEspecial <= 0.3) {
-                    System.out.println("El atacante " + equipo.get(atacante).nombre + " usa un ataque especial!");
-                    magoAtacante.habilidadEspecial(equipo.get(defensor));
+                if (turnoEquipo1) {
+                    atacante = equipo1.get(aleatorio.nextInt(equipo1.size()));
+                    defensor = equipo2.get(aleatorio.nextInt(equipo2.size()));
+                    aliados.addAll(equipo1);
                 } else {
-                    mostrarMensajeAtaque(equipo, atacante, defensor);
-                    magoAtacante.atacar(equipo.get(defensor));
+                    atacante = equipo2.get(aleatorio.nextInt(equipo1.size()));
+                    defensor = equipo1.get(aleatorio.nextInt(equipo1.size()));
+                    aliados.addAll(equipo2);
                 }
-                mostrarMensajeHP(equipo, atacante, defensor);
-            } else if (equipo.get(atacante) instanceof Ballestero ballesteroAtacante && ballesteroAtacante.getRecargado()) {
-                System.out.println("Ataque de ballestero todavía está recargando...");
-            } else {
-                mostrarMensajeAtaque(equipo, atacante, defensor);
-                equipo.get(atacante).atacar(equipo.get(defensor));
-                mostrarMensajeHP(equipo, atacante, defensor);
-            }
+            } while (!atacante.estaVivo() || !defensor.estaVivo());
+            turnoEquipo1 = !turnoEquipo1;
+            System.out.println("Atacante de turno actual: ");
+            System.out.println(atacante);
+            System.out.println("Defensor de turno actual: ");
+            System.out.println(defensor);
 
-            if (!equipo.get(defensor).estaVivo()) {
-                System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " ha muerto!");
+            switch (atacante) {
+                case HechiceroOscuro magoOscuro -> turnoMagoOscuro(magoOscuro, defensor, aliados);
+                case HechiceroDeLuz magoLuz -> turnoMagoLuz(magoLuz, defensor, aliados);
+                case Paladin paladin -> turnoPaladin(paladin, defensor, aliados);
+                case Ballestero ballesteroAtacante when ballesteroAtacante.getRecargado() ->
+                        System.out.println("Ataque de ballestero todavía está recargando...");
+                default -> {
+                    mostrarMensajeAtaque(atacante, defensor);
+                    atacante.atacar(defensor);
+                    mostrarMensajeHP(atacante, defensor);
+                }
+            }
+            if (!defensor.estaVivo()) {
+                System.out.println(defensor.getClass().getSimpleName() + " " + defensor.nombre + " ha muerto!");
             }
             turno++;
         }
         System.out.println("\n ===== RESULTADOS DE BATALLA =====");
-        for (Personaje personaje : equipo) {
+        System.out.println("EQUIPO 1:");
+        for (Personaje personaje : equipo1) {
+            System.out.println(personaje.toString());
+            System.out.println("===================");
+        }
+        System.out.println("|||||||||||||||||||||");
+        System.out.println("EQUIPO 2:");
+        for (Personaje personaje : equipo2) {
             System.out.println(personaje.toString());
             System.out.println("===================");
         }
     }
 
-    public static void mostrarMensajeAtaque(ArrayList<Personaje> equipo, int atacante, int defensor) {
-        System.out.println(equipo.get(atacante).getClass().getSimpleName() + " " + equipo.get(atacante).nombre + " ataca a " + equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre);
+    public static void mostrarMensajeAtaque(Personaje atacante, Personaje defensor) {
+        System.out.println(atacante.getClass().getSimpleName() + " " + atacante.nombre + " ataca a " + defensor.getClass().getSimpleName() + " " + defensor.nombre);
     }
 
-    public static void mostrarMensajeHP(ArrayList<Personaje> equipo, int atacante, int defensor) {
-        System.out.println(equipo.get(defensor).getClass().getSimpleName() + " " + equipo.get(defensor).nombre + " tiene " + equipo.get(defensor).vida + " HP");
+    public static void mostrarMensajeHP(Personaje atacante, Personaje defensor) {
+        System.out.println(defensor.getClass().getSimpleName() + " " + defensor.nombre + " tiene " + defensor.vida + " HP");
+    }
+
+    public static void ejecutarAtaqueNormal(Personaje atacante, Personaje defensor) {
+        mostrarMensajeAtaque(atacante, defensor);
+        atacante.atacar(defensor);
+        mostrarMensajeHP(atacante, defensor);
+    }
+
+    public static void turnoPaladin(Paladin paladin, Personaje enemigo, ArrayList<Personaje> aliados) {
+        Personaje herido = buscarHerido(aliados);
+        if (herido != null) {
+            if (Math.random() <= 0.70) {
+                paladin.sanar(herido);
+            } else {
+                ejecutarAtaqueNormal(paladin, enemigo);
+            }
+        } else {
+            if (Math.random() <= 0.50) {
+                ejecutarAtaqueNormal(paladin, enemigo);
+            } else {
+                paladin.habilidadBuff(aliados);
+            }
+        }
+    }
+
+    public static void turnoMagoOscuro(HechiceroOscuro mago, Personaje enemigo, ArrayList<Personaje> aliados) {
+        if (Math.random() <= 0.33) {
+            mago.habilidadBuff(aliados);
+        } else {
+            mostrarMensajeAtaque(mago, enemigo);
+            if (Math.random() <= 0.33) {
+                mago.habilidadEspecial(enemigo);
+            } else {
+                mago.atacar(enemigo);
+            }
+            mostrarMensajeHP(mago, enemigo);
+        }
+    }
+
+    public static void turnoMagoLuz(HechiceroDeLuz mago, Personaje enemigo, ArrayList<Personaje> aliados) {
+        double decision = Math.random();
+        if (decision <= 0.5) {
+            Personaje aliadoCurar = buscarHerido(aliados);
+            if (aliadoCurar != null) {
+                mago.sanar(aliadoCurar);
+            } else {
+                ejecutarAtaqueNormal(mago, enemigo);
+            }
+        } else if (decision <= 0.75) {
+            mostrarMensajeAtaque(mago, enemigo);
+            mago.habilidadEspecial(enemigo);
+            mostrarMensajeHP(mago, enemigo);
+        } else {
+            ejecutarAtaqueNormal(mago, enemigo);
+        }
+    }
+
+    public static Personaje buscarHerido(ArrayList<Personaje> aliados) {
+        Personaje aliadoCurar = null;
+        for (Personaje p : aliados) {
+            if (p.estaVivo() && p.vida < p.vidaMax) {
+                aliadoCurar = p;
+                return p;
+            }
+        }
+        return null;
     }
 }
+

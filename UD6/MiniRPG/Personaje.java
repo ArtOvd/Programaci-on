@@ -5,12 +5,14 @@ public abstract class Personaje {
     protected int vida;
     protected int ataqueBase;
     protected int nivel;
+    protected int vidaMax;
 
     public Personaje(String nombre, int vida, int ataqueBase, int nivel) {
         this.nombre = nombre;
         this.vida = vida;
         this.ataqueBase = ataqueBase;
         this.nivel = nivel;
+        this.vidaMax = this.vida;
     }
 
     public abstract void atacar(Personaje enemigo);

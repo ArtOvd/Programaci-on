@@ -1,19 +1,23 @@
 package MiniRPG;
 
-public class Bardo extends Arquero {
+public class Bardo extends Arquero implements IEvasion {
     public Bardo(String nombre, int vida, int ataqueBase, int nivel) {
         super(nombre, vida, ataqueBase, nivel);
     }
 
     @Override
     public int recibirDano(int dano){
-        double blockChance = Math.random();
-        if (blockChance <= 0.3) {
-            System.out.println(this.getClass().getSimpleName() + " " + this.nombre + " esquivó el ataque!");
-            return 0;
-        } else {
-            return super.recibirDano(dano);
-        }
+       if (evadeAtaqueNormal()) {
+           System.out.println(this.getClass().getSimpleName() + " " + this.nombre + " esquiva el ataque por agilidad!");
+           return 0;
+       } else {
+           super.recibirDano(dano);
+       }
+       return dano;
+    }
 
+    @Override
+    public boolean evadeAtaqueNormal() {
+        return Math.random() <= 0.4;
     }
 }
