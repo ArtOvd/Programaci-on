@@ -57,9 +57,7 @@ public class MainRPG {
                 case Ballestero ballesteroAtacante when ballesteroAtacante.getRecargado() ->
                         System.out.println("Ataque de ballestero todavía está recargando...");
                 default -> {
-                    mostrarMensajeAtaque(atacante, defensor);
-                    atacante.atacar(defensor);
-                    mostrarMensajeHP(atacante, defensor);
+                    ejecutarAtaqueNormal(atacante, defensor);
                 }
             }
             if (!defensor.estaVivo()) {
@@ -73,7 +71,7 @@ public class MainRPG {
             System.out.println(personaje.toString());
             System.out.println("===================");
         }
-        System.out.println("|||||||||||||||||||||");
+        System.out.println("||||||||||||||||||||||||||||||||");
         System.out.println("EQUIPO 2:");
         for (Personaje personaje : equipo2) {
             System.out.println(personaje.toString());
@@ -93,6 +91,12 @@ public class MainRPG {
         mostrarMensajeAtaque(atacante, defensor);
         atacante.atacar(defensor);
         mostrarMensajeHP(atacante, defensor);
+    }
+
+    public static void ejecutarHabilidadEspecial(Mago mago, Personaje defensor) {
+        mostrarMensajeAtaque(mago, defensor);
+        mago.habilidadEspecial(defensor);
+        mostrarMensajeHP(mago, defensor);
     }
 
     public static void turnoPaladin(Paladin paladin, Personaje enemigo, ArrayList<Personaje> aliados) {
@@ -116,13 +120,12 @@ public class MainRPG {
         if (Math.random() <= 0.33) {
             mago.habilidadBuff(aliados);
         } else {
-            mostrarMensajeAtaque(mago, enemigo);
             if (Math.random() <= 0.33) {
-                mago.habilidadEspecial(enemigo);
+                ejecutarHabilidadEspecial(mago, enemigo);
             } else {
-                mago.atacar(enemigo);
+                ejecutarAtaqueNormal(mago, enemigo);
             }
-            mostrarMensajeHP(mago, enemigo);
+
         }
     }
 
@@ -136,9 +139,7 @@ public class MainRPG {
                 ejecutarAtaqueNormal(mago, enemigo);
             }
         } else if (decision <= 0.75) {
-            mostrarMensajeAtaque(mago, enemigo);
-            mago.habilidadEspecial(enemigo);
-            mostrarMensajeHP(mago, enemigo);
+            ejecutarHabilidadEspecial(mago, enemigo);
         } else {
             ejecutarAtaqueNormal(mago, enemigo);
         }
