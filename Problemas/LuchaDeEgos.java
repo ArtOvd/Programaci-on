@@ -22,7 +22,7 @@ public class LuchaDeEgos {
 
             for (int i = 0; i < fuerzas.size(); i++){
                 for (int j = i + 1; j < deseados.size() ; j++) {
-                    if (fuerzas.get(i) != 0 && deseados.get(j) != null) {
+                    if (fuerzas.get(i) != 0 && deseados.get(j) != null ) {
                         if (deseados.get(i).startsWith("=")) {
                             if (Integer.parseInt(String.valueOf(deseados.get(i).charAt(1))) == fuerzas.get(j) && Integer.parseInt(String.valueOf(deseados.get(j).charAt(1))) == fuerzas.get(i)) {
                                 System.out.println((i + 1) + " " + (j + 1));
@@ -33,7 +33,7 @@ public class LuchaDeEgos {
                                 deseados.set(j, null);
                             }
                         } else if (deseados.get(i).startsWith(">")) {
-                            if (Integer.parseInt(String.valueOf(deseados.get(i).charAt(1))) < fuerzas.get(j) && Integer.parseInt(String.valueOf(deseados.get(j).charAt(1))) > fuerzas.get(i)) {
+                            if (Integer.parseInt(String.valueOf(deseados.get(i).charAt(1))) < fuerzas.get(j) || Integer.parseInt(String.valueOf(deseados.get(j).charAt(1))) > fuerzas.get(i)) {
                                 System.out.println((i + 1) + " " + (j + 1));
                                 count++;
                                 fuerzas.set(i, 0);
@@ -42,7 +42,7 @@ public class LuchaDeEgos {
                                 deseados.set(j, null);
                             }
                         } else if (deseados.get(i).startsWith("<")) {
-                            if (Integer.parseInt(String.valueOf(deseados.get(i).charAt(1))) > fuerzas.get(j) && Integer.parseInt(String.valueOf(deseados.get(j).charAt(1))) < fuerzas.get(i)) {
+                            if (Integer.parseInt(String.valueOf(deseados.get(i).charAt(1))) > fuerzas.get(j) || Integer.parseInt(String.valueOf(deseados.get(j).charAt(1))) < fuerzas.get(i)) {
                                 System.out.println((i + 1) + " " + (j + 1));
                                 count++;
                                 fuerzas.set(i, 0);
