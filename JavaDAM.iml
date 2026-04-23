@@ -10,6 +10,8 @@
       <sourceFolder url="file://$MODULE_DIR$/UD6" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Problemas" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Simulacro" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Simulacro2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/UD7" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
