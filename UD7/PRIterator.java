@@ -57,9 +57,6 @@ public class PRIterator {
              public int getNota() {
                  return nota;
              }
-             public void setNombre(String nombre) {
-                 this.nombre = nombre;
-             }
              public void setNota(int nota) {
                  this.nota = nota;
              }

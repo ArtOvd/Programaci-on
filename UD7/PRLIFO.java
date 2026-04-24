@@ -7,7 +7,7 @@ public class PRLIFO {
 
 
     public static void main(String[] args) {
-        // EJ1:
+        // EJ 1:
 //       Stack<String> st = new Stack<String>();
 //       st.push("YouTube");
 //       st.push("GitHub");
@@ -19,22 +19,53 @@ public class PRLIFO {
 //           System.out.println(st.pop());
 //       }
 
-        // EJ2:
+        // EJ 2:
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("Frase: ");
+//        String frase = sc.nextLine();
+//        Stack<String> st = new Stack<>();
+//        String[] palabras = frase.split(" ");
+//        for (String palabra : palabras) {
+//            st.push(palabra);
+//        }
+//        Iterator<String> it = st.iterator();
+//        while (it.hasNext()) {
+//            System.out.print(st.pop());
+//        }
+
+        // EJ 3:
         Scanner sc = new Scanner(System.in);
-        System.out.println("Frase: ");
-        String frase = sc.nextLine();
-        Stack<String> st = new Stack<>();
-        String[] palabras = frase.split(" ");
-        for (String palabra : palabras) {
-            st.push(palabra);
+        String exp = sc.nextLine();
+        Stack<Character> st = new Stack<>();
+        boolean error = false;
+        for (int i = 0; i < exp.length(); i++) {
+            if (exp.charAt(i) == '(' || exp.charAt(i) == '[') {
+                st.push(exp.charAt(i));
+            } else if (exp.charAt(i) == ')') {
+                if (!st.isEmpty() && st.peek() == '(') {
+                    st.pop();
+                } else {
+                    error = true;
+                    break;
+                }
+            } else if (exp.charAt(i) == ']') {
+                if (!st.isEmpty() && st.peek() == '[') {
+                    st.pop();
+                } else {
+                    error = true;
+                    break;
+                }
+            }
+
         }
-        Iterator<String> it = st.iterator();
-        while (it.hasNext()) {
-            System.out.print(st.pop());
+        if (!error && st.isEmpty()) {
+            System.out.println("Expresión válida");
+        } else {
+            System.out.println("Expresión no válida");
         }
+
+
     }
-
-
 
 
 }
