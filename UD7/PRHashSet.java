@@ -4,11 +4,11 @@ public class PRHashSet {
 
     public static void main(String[] args) {
         // EJ 1:
-//        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<String>();
 //        Scanner sc = new Scanner(System.in);
 //        while (true) {
 //            String invitado = sc.nextLine();
-//            if (invitado.equals("fin")) {
+//            if (invitado.equalsIgnoreCase("fin")) {
 //                break;
 //            }
 //            set.add(invitado);
