@@ -12,13 +12,14 @@ public class MainInventario {
         inventario.agregarEquipo(l2);
         inventario.agregarEquipo(s1);
         inventario.agregarEquipo(s2);
-        try {
-            inventario.buscarEquipo("S1");
-            inventario.buscarEquipo("S2");
-            inventario.buscarEquipo("l1");
-        } catch (EquipoNoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
+        inventario.mostrarTodos();
+//        try {
+//            inventario.buscarEquipo("S1");
+//            inventario.buscarEquipo("S2");
+//            inventario.buscarEquipo("l1");
+//        } catch (EquipoNoEncontradoException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
 }

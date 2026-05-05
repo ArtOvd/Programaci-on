@@ -10,11 +10,11 @@ public class GestionClinica {
         pacientes.add(nombre);
     }
 
-    public String siguientePaciente() throws ColaVaciaException {
+    public void siguientePaciente() throws ColaVaciaException {
         if (pacientes.isEmpty()) {
             throw new ColaVaciaException("Error. Cola vacia");
         }
-        return pacientes.remove();
+        pacientes.remove();
     }
 
     public void verListaEspera() {

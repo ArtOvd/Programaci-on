@@ -19,11 +19,9 @@ public class Inventario {
     }
 
     public void mostrarTodos() {
-        Iterator<Dispositivo> it = equipos.values().iterator();
-        while (it.hasNext()) {
-            Dispositivo d = it.next();
-            d.encender();
-        }
+        equipos.forEach((serial, dispositivo) -> {
+        dispositivo.encender();
+        });
     }
 
 }
