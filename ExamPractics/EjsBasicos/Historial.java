@@ -9,7 +9,7 @@ public static class Historial {
 
     public void retroceder() throws HistorialVacioException {
         if (links.isEmpty()) {
-            throw new HistorialVacioException("Error. Historial vacío.");
+            throw new HistorialVacioException("Error. EjsBasicos.Historial vacío.");
         }
         System.out.println(links.pop());
     }

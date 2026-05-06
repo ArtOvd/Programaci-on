@@ -1,3 +1,5 @@
+package EjsBasicos;
+
 public class MainClinica {
 
     public static void main(String[] args) {
